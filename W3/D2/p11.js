@@ -1,10 +1,10 @@
 //recursive function 
 // a function which calls itself
 
-function factorial(n){
+function fact(n){
     if(n<=1){
         return 1;
     }
     return n*factorial(n-1);
 }
-console.log("factorial is",factorial(3));
+console.log("factorial is",fact(3));
