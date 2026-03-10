@@ -9,7 +9,7 @@ catch(err){
     console.log("Error caught",err.name,"-",err.message);
 }
 console.log("Program execution continues");
-// JSON Parsing error
+// JSON Parsing errors
 let jsontext="{json}";
 try{
     let data=JSON.parse(jsontext);
