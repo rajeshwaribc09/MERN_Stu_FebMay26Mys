@@ -12,7 +12,6 @@ document.getElementById("rmBtn").addEventListener("click",function(){
     list.removeChild(list.lastElementChild);
     }
     else{
-
     errMessage.textContent="no item is to delete";
     }
 });
