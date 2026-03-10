@@ -1,5 +1,5 @@
 const container=document.getElementById("container");
-// position:
+// position
 // beforebegin
 // afterbegin
 // beforeend
