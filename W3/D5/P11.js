@@ -5,7 +5,6 @@ btn.addEventListener("click",function(e){
     console.log("current target===btn",e.currentTarget===btn);
     console.log("e.target===btn",e.target===btn);
 });
-
 // another approach to create event listener using arrow function
 btn.addEventListener("click",(e)=>{
     console.log("arrow function");
