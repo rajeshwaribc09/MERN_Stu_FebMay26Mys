@@ -8,7 +8,6 @@ console.log("Page title",document.title);
 const info=document.getElementsByClassName("info");
 const run=document.getElementById("run");
 
-
 // 
 const spanTag=document.getElementsByTagName("span");
 run.addEventListener("click",function(){
