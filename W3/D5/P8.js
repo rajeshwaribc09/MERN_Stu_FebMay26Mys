@@ -1,4 +1,4 @@
-// Event delegation
+// Event Delegation
 const tasklist=document.getElementById("tasklist");
 const addTask=document.getElementById("addTask");
 let taskCount=3;
@@ -9,6 +9,7 @@ tasklist.addEventListener("click",function(event){
             event.target.parentElement.remove();
     }
 });
+
 addTask.addEventListener("click",function(){
     taskCount++;
     const li=document.createElement("li");
