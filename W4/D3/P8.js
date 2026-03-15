@@ -11,4 +11,6 @@ asyncFetchBtn.addEventListener("click",async function(){
     catch(error){
         output.textContent="Error:"+error.message;
     }
+    
 });
+
