@@ -3,7 +3,7 @@
 //     error.innerHTML= "Trying";
 try{
     console.log("Trying to access undefined variable");
-    console.log(notDefined);
+    console.log(undefined);
 }
 catch(err){
     console.log("Error caught",err.name,"-",err.message);
