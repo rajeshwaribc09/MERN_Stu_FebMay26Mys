@@ -34,6 +34,7 @@
 //         this.name="validationError";
 //     }
 // }
+
 function createUser(name){
     if(!name){
         throw new validationError("Name is required");
