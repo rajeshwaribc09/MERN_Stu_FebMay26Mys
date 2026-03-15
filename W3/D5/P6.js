@@ -1,8 +1,8 @@
 const form = document.getElementById("loginForm");
 const username = document.getElementById("username");
 const message = document.getElementById("message");
-
-form.addEventListener("submit",function(event){  //event is a user defined 
+//event is a user defined 
+form.addEventListener("submit",function(event){  
     //stop page reload
     event.preventDefault();
     
