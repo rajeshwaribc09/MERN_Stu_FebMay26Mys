@@ -8,7 +8,6 @@ let users=[
 ]
 console.log(users);
 console.table(users);
-
 // Group related logs
 console.group("Grouped logs");
 console.log("Log 1");
