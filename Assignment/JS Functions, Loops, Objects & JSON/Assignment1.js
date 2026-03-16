@@ -36,8 +36,6 @@ function tagPassword(password) {
 
     return "WEAK";
 }
-
-
 // Test examples
 console.log(tagPassword("abc"));           // WEAK
 console.log(tagPassword("abc12345"));      // MEDIUM
