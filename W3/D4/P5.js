@@ -6,6 +6,6 @@ console.log(avg);
 // reduce to object count by category
 let items=["pen","pencil","pen","eraser"];
 let count=items.reduce((intermediateValue,item)=>{intermediateValue[item]=(intermediateValue[item]||0)+1;
-    return a;
+    return item;
 },{});
 console.log(count)
