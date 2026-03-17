@@ -37,7 +37,6 @@ document.getElementById("addBtn").addEventListener("click", function () {
     question.value = "";
     answer.value = "";
 });
-
 document.getElementById("removeBtn").addEventListener("click", function () {
 
     if (faqContainer.lastElementChild) {
