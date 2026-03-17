@@ -1,3 +1,4 @@
+// callback handling with named functions
 function loadUser(next){
     setTimeout(function(){
         console.log("step 1:User loaded.");
