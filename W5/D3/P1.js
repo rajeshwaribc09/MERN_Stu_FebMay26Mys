@@ -1,8 +1,8 @@
 // Introduction to async/await
 function getMessage(){
-    return new Promise(function(resolv){
+    return new Promise(function(resolve){
         setTimeout(()=>{
-            resolv("Async/await makes promise based code easier to read");
+            resolve("Async/await makes promise based code easier to read");
         },1000);
     });
 }
