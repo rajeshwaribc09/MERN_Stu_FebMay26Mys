@@ -3,7 +3,12 @@ const express=require("express");
 const app=express();
 // To read
 app.get("/users",function(req,res){
-    res.send("Returning all users");
+    res.status(200).json([{message:"Success"},
+        {id:1,name:"Raj"},
+        {id:2,name:"bipin"},
+        {id:3,name:"Ram"},
+    ]);
+    //  res.send("Returning all users");
 });
 
 // To create
