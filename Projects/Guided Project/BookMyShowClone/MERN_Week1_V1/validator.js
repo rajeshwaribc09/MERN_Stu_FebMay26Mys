@@ -1,6 +1,6 @@
 // Callback based validation functions
 function validateMovieSelection(movies,movieId,Callback){
-    const selectedMovie=movies.find((movie)=>movieId===movieId);
+    const selectedMovie=movies.find((movie)=>movie.id===movieId);
     if(!selectedMovie){
         return Callback("Invalid movie selection.Choose a valid movie movie ID.",null);
     }
