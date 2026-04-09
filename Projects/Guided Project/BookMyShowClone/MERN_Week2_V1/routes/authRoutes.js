@@ -6,7 +6,7 @@ const {loginUser,logoutUser,getProfile}=require("../controllers/authController")
 const router=express.Router();
 
 router.post("/login",loginUser);
-router.post("logout",logoutUser);
+router.post("/logout",logoutUser);
 router.get("/profile",authMiddleware,getProfile);
 
 module.exports=router;
