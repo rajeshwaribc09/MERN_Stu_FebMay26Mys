@@ -5,4 +5,4 @@ class CustomError extends Error{
         this.statusCode=statusCode;
     }
 }
-modue.exports=CustomError;
+module.exports=CustomError;
