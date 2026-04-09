@@ -99,7 +99,7 @@ function deleteMovie(req, res, next) {
     });
 }
 
-modue.exports={
+module.exports={
     getHome,
     getAllMovies,
     getMovieById,
