@@ -26,6 +26,7 @@ app.use(session({
 app.use(loggerMiddleware);
 app.use("/", movieRoutes);
 app.use("/auth", authRoutes);
+app.use("/",bookingRoutes);
 app.use("/users", userRoutes);
 app.use(errorMiddleware);
 module.exports = app;
