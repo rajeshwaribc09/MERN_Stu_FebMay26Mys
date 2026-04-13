@@ -54,7 +54,7 @@ function logoutUser(req, res, next) {
             res.clearCookie("token");
             res.status(200).json({
                 success: true,
-                message: "Login successful",
+                message: "Logout successful",
             });
         });
     }
@@ -67,7 +67,7 @@ function getProfile(req,res,next){
     try{
          res.status(200).json({
             success: true,
-            message: "Login successful",
+            message: "Profile fetched successfully",
             user:req.user,
             sessionUser:req.session.user || null
         });
