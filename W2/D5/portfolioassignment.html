@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-white p-4 ">
+        <nav class="flex justify-between items-center max-w-4xl mx-auto">
+            <a href="#home" class="text-xl font-bold text-blue-600">Rajeshwari B C</a>
+            <ul class="flex space-x-4">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section id="home" class="h-screen flex flex-col justify-center items-center text-center bg-white p-10">
+        <h1 class="text-4xl font-bold text-black mb-4">Rajeshwari B C</h1>
+        <img src="PROFILE.jpeg" alt="My photo" class="w-32 h-32 rounded-full mb-4 bg-gray-200">
+        <p class="text-lg">Software Developer <br>MERN Stack | DevOps</p>
+        <a href="#contact" class="mt-6 p-3 bg-blue-600 text-white rounded">Contact me</a>
+    </section>
+
+    <!-- About section -->
+    <section id="about" class="p-10 max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-blue-800 mb-4 border-b">About me</h2>
+        <article class="bg-white p-6 rounded shadow">
+            <h3 class="text-xl font-semibold mb-2">Full Stack Developer</h3>
+            <p>Experienced in Web Dev and hosting. Specialized in Finance-Domain projects.</p>
+            <div class="mt-4 flex gap-2">
+                <span class="bg-blue-100 p-1 text-sm">Backend:NodeJS</span>
+                <span class="bg-green-100 p-1 text-sm">DB:Optimization</span>
+            </div>
+        </article>
+    </section>
+
+    <!-- Skills -->
+     <section id="skills" class="p-10 bg-gray-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-2xl font-bold mb-6">My skills</h3>
+            <div class="bg-white p-6 rounded">
+                <h4 class="font-bold">MERN Stack</h4>
+                <p>ReactJS, NodeJS, ExpressJS, MongoDB</p>
+            </div>
+        </div>
+     </section>
+
+     <!-- Projects -->
+      <section id="projects" class="p-10 max-w-4xl mx-auto">
+        <h3 class="text-2xl font-bold mb-6">My projects</h3>
+        <div class="bg-white p-6 rounded border mb-6">
+            <h4 class="text-xl font-bold">gola</h4>
+            <p class="mb-2">Rapid way to book a cab hasslefree</p>
+            <a href="https://www.gola.com" target="_blank" class="text-blue-600 underline">View Project</a>
+        </div>
+
+        <table class="w-full text-left bg-white border">
+            <thead class="bg-gray-300">
+                <tr>
+                    <th class="p-2 border">Project</th>
+                    <th colspan="2" class="p-2 border">Technology</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-2 border">AWS for hosting</td>
+                    <td class="p-2 border">MERN</td>
+                    <td class="p-2 border">Redis</td>
+                </tr>
+            </tbody>
+        </table>
+      </section>
+
+      <!-- contact me -->
+      <section id="contact" class="p-10 bg-white">
+        <div class="max-w-md mx-auto">
+            <h3 class="text-2xl font-bold text-center mb-6">Contact me</h3>
+            <form class="space-y-4">
+                <div>
+                    <label class="block font-bold">Name</label>
+                    <input type="text" placeholder="name" class="w-full p-2 border border-gray-400 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold">Email</label>
+                    <input type="email" placeholder="email" class="w-full p-2 border border-gray-400 rounded">
+                </div>
+                <div>
+                    <select class="w-full p-2 border border-gray-400 rounded">
+                        <option value="fte">FTE</option>
+                        <option value="consultant">Consultant</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full p-3 bg-black text-white font-bold rounded">Send</button>
+            </form>
+        </div>
+      </section>
+
+</body>
+</html>
