@@ -15,6 +15,27 @@ const {
   viewProfile
 } = require("./profile");
 
+const {
+  sendConnectionRequest,
+  viewRequests,
+  handleRequest,
+  viewConnections
+} = require("./connections");
+
+const {
+  createPost,
+  likePost,
+  commentOnPost
+} = require("./posts");
+
+const {
+  validatePost
+} = require("./validator");
+
+const {
+  showFeed,
+} = require("./feed");
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -47,17 +68,19 @@ function menu() {
 
   rl.question("Choice: ", handleMenu);
 }
+
 function handleMenu(choice) {
 
   switch (choice) {
+
     case "1":
       console.log("\n1. Create Profile");
       console.log("2. Login");
 
       rl.question("Choose: ", opt => {
+
         if (opt === "1") {
           rl.question("Enter Name: ", name => {
-
             rl.question("Enter Headline: ", headline => {
 
               createProfile(name, headline)
@@ -71,9 +94,9 @@ function handleMenu(choice) {
                 });
 
             });
-
           });
         }
+
         else if (opt === "2") {
           rl.question("Enter Name: ", name => {
 
@@ -97,6 +120,7 @@ function handleMenu(choice) {
 
       });
       break;
+
     case "2":
       if (!requireLogin()) return menu();
 
@@ -143,6 +167,7 @@ function handleMenu(choice) {
 
       });
       break;
+
     case "4":
       if (!requireLogin()) return menu();
 
@@ -160,13 +185,94 @@ function handleMenu(choice) {
       }
       menu();
       break;
+
     case "5":
+      if (!requireLogin()) return menu();
+
+      rl.question("Enter User ID to connect: ", id => {
+        sendConnectionRequest(id);
+        menu();
+      });
+      break;
+
     case "6":
+      if (!requireLogin()) return menu();
+
+      viewRequests();
+      menu();
+      break;
+
     case "7":
+      if (!requireLogin()) return menu();
+
+      viewRequests();
+
+      rl.question("Enter request number: ", num => {
+        rl.question("Accept or Reject (a/r): ", action => {
+
+          if (action === "a") handleRequest(Number(num), "accept");
+          else handleRequest(Number(num), "reject");
+
+          menu();
+        });
+      });
+      break;
+
     case "8":
+      if (!requireLogin()) return menu();
+
+      viewConnections();
+      menu();
+      break;
+
     case "9":
+      if (!requireLogin()) return menu();
+
+      rl.question("Enter post content: ", content => {
+        validatePost(content, (err, validContent) => {
+          if (err) {
+            if (err === "retry") return menu();
+            return rl.close();
+          }
+
+          createPost(validContent);
+          menu();
+        });
+      });
+      break;
+
     case "10":
+      if (!requireLogin()) return menu();
+      showFeed();
+      menu();
+      break;
+
     case "11":
+      if (!requireLogin()) return menu();
+
+      rl.question("1. Like Post\n2. Comment on Post\nChoose: ", opt => {
+
+        if (opt === "1") {
+          rl.question("Enter Post ID: ", id => {
+            likePost(id);
+            menu();
+          });
+        }
+
+        else if (opt === "2") {
+          rl.question("Enter Post ID: ", id => {
+            rl.question("Enter Comment: ", text => {
+              commentOnPost(id, text);
+              menu();
+            });
+          });
+        }
+
+        else {
+          console.log(chalk.red("Invalid option"));
+          menu();
+        }
+      });
       break;
 
     case "12":
