@@ -1,0 +1,18 @@
+const OTP=require("../models/OTP");
+const bcrypt=require("bcrypt");
+
+// Generate OTP
+exports.generateOTP=async(email)=>{ 
+    const otp=Math.floor(100000+Math.random()*900000).toString();    //task is convert this line using crypto to generate the otp
+    const hashedOtp=await bcrypt.hash(otp,10);
+    const expiresAt=new Date(Date.now() + 5*60*1000);
+
+    await OTP.create({
+        email,
+        otp:hashedOtp,
+        expiresAt,
+    });
+
+    console.log("Generated OTP: ",otp); //testing only
+    return otp;
+};
