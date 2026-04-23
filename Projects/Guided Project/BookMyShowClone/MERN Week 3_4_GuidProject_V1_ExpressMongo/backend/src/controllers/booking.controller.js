@@ -34,7 +34,7 @@ exports.getMyBookings = async (req, res, next) => {
 };
 
 // Cancel booking
-exports.cancelBookings = async (req, res, next) => {
+exports.cancelBooking = async (req, res, next) => {
     try {
         const bookings = await bookingService.cancelBooking(req.params.id,req.user._id);
         res.status(200).json({
