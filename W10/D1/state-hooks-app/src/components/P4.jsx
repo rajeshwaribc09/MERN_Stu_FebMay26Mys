@@ -51,10 +51,10 @@ export function DerivedStateCondRender(){
     <div>
         <h3>Task List</h3>
         {tasks.map((task)=>(
-            <span key={task.id}>
+            <div key={task.id}>
                 {task.title}-{task.completed ? 'Done' : 'Pending'}
                 <button onClick={()=>toggleTask(task.id)}>Toggle</button>
-            </span>
+            </div>
         ))}
     </div>
     </>
