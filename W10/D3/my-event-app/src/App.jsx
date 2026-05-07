@@ -2,13 +2,19 @@ import './App.css'
 import { EventBasics } from "./components/P1";
 import { EventObject } from "./components/P2";
 import { PassingArguments } from './components/P3';
+import { UseCallbackEvents } from './components/P5';
+import { EventDelegation } from './components/P6';
+import { ControlledComponent } from './components/P7';
 
 function App() {
    return (
     <>
       {/* <EventBasics /> */}
       {/* <EventObject /> */}
-      <PassingArguments/>
+      {/* <PassingArguments/> */}
+      {/* <UseCallbackEvents/> */}
+      {/* <EventDelegation/> */}
+      <ControlledComponent/>
     </>
   )
 }
