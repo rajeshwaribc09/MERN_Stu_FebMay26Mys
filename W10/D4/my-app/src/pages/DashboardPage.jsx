@@ -1,5 +1,3 @@
-// npm install react-router-dom in D4
-
 export function DashboardPage() {
     return (
         <div>
