@@ -1,6 +1,7 @@
 import { useState } from "react";
 export default function MovieSearch(){
     const[search,setSearch]=useState("");
+    
     return(
         <section>
             <h3>Search Movies</h3>

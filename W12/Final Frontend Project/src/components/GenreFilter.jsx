@@ -5,6 +5,7 @@ export default function GenreFilter(){
         setGenre(selectedGenre);
     }
     return(
+        
         <section>
             <h3>Genre Filter</h3>
             <p>Selected Genre:{genre}</p>

@@ -8,6 +8,7 @@ export default function SearchShortcut(params){
         }
     }
     return(
+        
         <section>
             <h2>Keyboard Search</h2>
             <input type="text" placeholder="Press Enter"

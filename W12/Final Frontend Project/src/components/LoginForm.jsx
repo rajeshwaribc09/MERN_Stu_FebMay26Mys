@@ -5,6 +5,7 @@ export default function LoginForm(){
         event.preventDefault();
         alert(`Login: ${email}`)
     }
+    
     return(
         <section>
             <h2>Login</h2>
