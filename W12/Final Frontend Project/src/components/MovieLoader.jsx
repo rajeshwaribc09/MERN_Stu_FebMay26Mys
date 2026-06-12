@@ -1,7 +1,7 @@
 import { useState } from "react";
 export default function MovieLoader(){
     const [isLoading,setIsLoading] = useState(true);
-    return(
+    return (
         <section>
             <h2>Movies</h2>
             {isLoading ? <p>Loading Movies...</p> : <p>Movie Loaded successfully</p>}

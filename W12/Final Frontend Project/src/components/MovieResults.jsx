@@ -1,7 +1,7 @@
 import { useState } from "react";
 export default function MovieResults() {
     const [movies, setMovies] = useState([]);
-    return (
+    return(
         <section>
             <h2>Search results</h2>
             {movies.length === 0 ? <p>No movies found</p> :

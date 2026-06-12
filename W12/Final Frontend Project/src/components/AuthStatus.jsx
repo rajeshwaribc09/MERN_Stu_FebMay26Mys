@@ -11,8 +11,7 @@ export default function AuthStatus(){
                 }
             </p>
             <button onClick={()=>{
-                setIsLoggedIn(!isLoggedIn)
-            }}>
+                setIsLoggedIn(!isLoggedIn)}}>
                 {isLoggedIn ? "Logout" : "Login"}
             </button>
         </section>
