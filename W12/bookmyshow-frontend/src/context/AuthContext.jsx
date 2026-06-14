@@ -1,209 +1,276 @@
 // src/context/AuthContext.jsx
 
-
 /*
 =========================================================
-SPRINT 2 – GLOBAL AUTHENTICATION STATE
+SPRINT 2 – AUTHENTICATION CONTEXT
 
 
 TOPICS COVERED:
 
 
-✓ createContext
-✓ Context Provider
-✓ Global State
+✓ Context API
+✓ createContext()
+✓ useContext()
+✓ useState()
+✓ useEffect()
+✓ Custom Hooks
 ✓ Session Persistence
+✓ JWT Management
 
 
 WHY THIS FILE?
 
 
-Authentication affects the entire app.
+Authentication information is needed
+throughout the application.
+
+
+Examples:
 
 
 Navbar
-Protected Routes
-Admin Pages
-Bookings
+↓
+Show Login / Logout
 
 
-all need access to auth state.
+ProtectedRoute
+↓
+Access Control
+
+
+Admin Routes
+↓
+Role Validation
+
+
+Without Context:
+
+
+Props drilling
+↓
+Messy code
+
+
+With Context:
+
+
+Global Authentication Store
 
 
 =========================================================
 */
 
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import { createContext, useEffect, useState } from "react";
+/*
+=========================================================
+CREATE AUTH CONTEXT
 
 
-export const AuthContext = createContext();
+This becomes the global container
+for authentication information.
 
+
+=========================================================
+*/
+
+const AuthContext = createContext(null);
+
+/*
+=========================================================
+AUTH PROVIDER
+
+
+Wraps the application and exposes
+authentication state.
+
+
+=========================================================
+*/
 
 export function AuthProvider({ children }) {
   /*
-  -----------------------------------------
-  GLOBAL AUTH STATE
-  -----------------------------------------
-  */
+    =====================================================
+    AUTHENTICATION STATE
 
+
+    user:
+    Stores currently logged-in user.
+
+
+    token:
+    Stores JWT.
+
+
+    =====================================================
+    */
 
   const [user, setUser] = useState(null);
 
-
   const [token, setToken] = useState(null);
 
-
-  const [loading, setLoading] = useState(true);
-
-
   /*
-  -----------------------------------------
-  RESTORE SESSION
+    =====================================================
+    SESSION RESTORATION
 
 
-  Browser Refresh
-  ↓
-  User stays logged in
+    Runs once when the application starts.
 
 
-  -----------------------------------------
-  */
+    Restores authentication from
+    localStorage.
 
+
+    =====================================================
+    */
 
   useEffect(() => {
     try {
       const storedToken = localStorage.getItem("token");
 
-
       const storedUser = localStorage.getItem("user");
-
 
       if (storedToken && storedUser) {
         setToken(storedToken);
 
-
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
-      console.error(
-        "Failed to restore session",
-
-
-        error,
-      );
-
+      console.error("Failed to restore authentication:", error);
 
       localStorage.removeItem("token");
-
-
       localStorage.removeItem("user");
     }
-
-
-    setLoading(false);
   }, []);
 
-
   /*
-  -----------------------------------------
-  LOGIN
+    =====================================================
+    LOGIN
 
 
-  Stores session globally.
+    Receives:
 
 
-  -----------------------------------------
-  */
+    token
+    user
 
 
-  function login(token, user) {
-    localStorage.setItem(
-      "token",
+    Updates:
 
 
-      token,
-    );
+    State
+    localStorage
 
 
-    localStorage.setItem(
-      "user",
+    =====================================================
+    */
 
+  function login(authToken, userData) {
+    setToken(authToken);
 
-      JSON.stringify(user),
-    );
+    setUser(userData);
 
+    localStorage.setItem("token", authToken);
 
-    setToken(token);
-
-
-    setUser(user);
+    localStorage.setItem("user", JSON.stringify(userData));
   }
 
-
   /*
-  -----------------------------------------
-  LOGOUT
+    =====================================================
+    LOGOUT
 
 
-  Clears session.
+    Clears:
 
 
-  -----------------------------------------
-  */
+    State
+    localStorage
 
+
+    =====================================================
+    */
 
   function logout() {
-    localStorage.removeItem("token");
-
-
-    localStorage.removeItem("user");
-
-
     setToken(null);
 
-
     setUser(null);
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("user");
   }
 
-
-  const value = {
-    user,
-
-
-    token,
+  /*
+    =====================================================
+    DERIVED STATE
 
 
-    loading,
+    Avoid storing redundant state.
 
 
-    login,
+    Authentication can be derived.
 
 
-    logout,
+    =====================================================
+    */
+
+  const isAuthenticated = Boolean(token);
+
+  /*
+    =====================================================
+    CONTEXT VALUE
 
 
-    isAuthenticated: !!token,
-  };
+    useMemo prevents unnecessary
+    object recreation.
 
+
+    =====================================================
+    */
+
+  const value = useMemo(
+    () => ({
+      user,
+      token,
+      isAuthenticated,
+      login,
+      logout,
+    }),
+    [user, token, isAuthenticated],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-
 /*
 =========================================================
-KEY TAKEAWAYS
+CUSTOM HOOK
 
 
-1. Context manages global auth.
+Instead of:
 
 
-2. localStorage enables persistence.
+useContext(AuthContext)
 
 
-3. Refresh does not log users out.
+everywhere,
+
+
+we expose:
+
+
+useAuth()
 
 
 =========================================================
 */
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within AuthProvider");
+  }
+
+  return context;
+}
