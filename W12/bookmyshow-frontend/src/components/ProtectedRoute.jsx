@@ -1,27 +1,23 @@
-// src/components/ProtectedRoute.jsx
-
+// src/routes/ProtectedRoute.jsx
 
 /*
 =========================================================
-SPRINT 2 – REAL ROUTE PROTECTION
+SPRINT 2 – PROTECTED ROUTES
 
 
 TOPICS COVERED:
 
 
-✓ Protected Routes
-✓ Context API
-✓ Custom Hooks
+✓ Conditional Rendering
 ✓ Navigate
-✓ Role-Based Authorization
-✓ Authentication vs Authorization
+✓ Authentication Checks
+✓ Authorization Checks
 
 
 WHY THIS COMPONENT?
 
 
-Certain pages should only be accessible
-to authenticated users.
+Some pages require login.
 
 
 Examples:
@@ -34,48 +30,11 @@ Logged-in Users
 
 Admin Dashboard
 ↓
-Admin Users
-
-
-Sprint 1:
-
-
-Mock Authentication
-
-
-Sprint 2:
-
-
-JWT
-↓
-AuthContext
-↓
-Real Authorization
-
-
-IMPLEMENTATION NOTES
-
-
-• Uses useAuth() from AuthContext.
-• Redirects guests to Login.
-• Redirects unauthorized roles Home.
-• Keeps route protection centralized.
-
-
-KEY TAKEAWAYS
-
-
-Authentication:
-Who are you?
-
-
-Authorization:
-What are you allowed to access?
+Admin Users Only
 
 
 =========================================================
 */
-
 
 import {
   Navigate,
@@ -83,182 +42,100 @@ import {
 } from "react-router-dom";
 
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
+export default function ProtectedRoute({
+  children,
 
-import LoadingSpinner from "../components/LoadingSpinner";
+  roles = [],
+}) {
+  const {
+    isAuthenticated,
 
+    loading,
 
-export default function ProtectedRoute({ children, requiredRole }) {
-  /*
-  =====================================================
-  AUTHENTICATION STATE
+    user,
+  } = useAuth();
 
-
-  Retrieved from AuthContext.
-
-
-  =====================================================
-  */
-
-
-  // const { isAuthenticated, user } = useAuth();
-
-
-  const { isAuthenticated, user, loading } = useAuth();
   const location = useLocation();
-
-
   /*
-  =====================================================
-  AUTHENTICATION CHECK
-
-
-  Guest users must login first.
-
-
-  =====================================================
+  ------------------------------------------------
+  SESSION RESTORATION IN PROGRESS
+  ------------------------------------------------
   */
-
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <p>Restoring session...</p>;
   }
 
+  /*
+  ------------------------------------------------
+  USER NOT LOGGED IN
+  ------------------------------------------------
+  */
 
   if (!isAuthenticated) {
-  return (
-    <Navigate
-      to="/login"
-      replace
-      state={{ from: location }}
-    />
-  );
-}
-
-  /*
-  =====================================================
-  AUTHORIZATION CHECK
-
-
-  Some routes require a specific role.
-
-
-  Example:
-
-
-  Admin Dashboard
-  ↓
-  role === "admin"
-
-
-  =====================================================
-  */
-
-
-  if (requiredRole && user?.role !== requiredRole) {
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location }}
+      />
+    );
   }
 
 
   /*
-  =====================================================
-  ACCESS GRANTED
+  ------------------------------------------------
+  ROLE CHECK
+  Example:
+  roles = ["admin"]
+  user.role === "user"
+  ↓
+  Redirect
 
 
-  =====================================================
+  ------------------------------------------------
   */
 
+  if (roles.length > 0 && !roles.includes(user?.role)) {
+    return <Navigate to="/" replace />;
+  }
 
   return children;
 }
 
-
 /*
 =========================================================
-FLOW
+FLOWS
 
 
-Guest User
+BOOKINGS
 
 
-Protected Route
+User Logged In
 ↓
-Authenticated?
+Allowed
+
+
+Logged Out
 ↓
-No
+Login Page
+
+
+
+
+ADMIN
+
+
+Admin
 ↓
-Redirect → /login
+Allowed
 
 
-
-
-Authenticated User
-
-
-Protected Route
+Customer
 ↓
-Authenticated?
-↓
-Yes
-↓
-Role Required?
-↓
-No
-↓
-Allow Access
-
-
-
-
-Admin Route
-
-
-Protected Route
-↓
-Authenticated?
-↓
-Yes
-↓
-Role Required?
-↓
-Yes
-↓
-Role Matches?
-↓
-No → Redirect Home
-↓
-Yes → Render Page
-
-
-=========================================================
-
-
-AUTHENTICATION VS AUTHORIZATION
-
-
-Authentication
-
-
-"Who are you?"
-
-
-Example:
-Logged In?
-
-
-
-
-Authorization
-
-
-"What can you access?"
-
-
-Example:
-Admin Only?
-
-
+Redirect Home
 
 
 =========================================================
@@ -267,42 +144,10 @@ Admin Only?
 KEY TAKEAWAYS
 
 
-1. Route protection should be centralized.
-
-
-2. Authentication and Authorization
-   are separate concerns.
-
-
-3. Context eliminates mock values.
-
-
-4. Logout instantly revokes access.
-
-
-=========================================================
-
-
-VERIFICATION
-
-
-✓ Guest users redirected to Login
-
-
-✓ Logged-in users access Bookings
-
-
-✓ Customers blocked from Admin pages
-
-
-✓ Admins access Admin routes
-
-
-✓ Refresh preserves access
-
-
-✓ Logout revokes access
-
-
+1. Authentication and authorization
+   are different concepts.
+2. ProtectedRoute centralizes checks.
+3. Session restoration prevents
+   incorrect redirects.
 =========================================================
 */
