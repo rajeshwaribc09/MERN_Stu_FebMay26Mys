@@ -1,6 +1,5 @@
 // src/context/AuthContext.jsx
 
-
 /*
 =========================================================
 SPRINT 2 – AUTHENTICATION CONTEXT
@@ -63,15 +62,7 @@ Global Authentication Store
 =========================================================
 */
 
-
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 /*
 =========================================================
@@ -85,9 +76,7 @@ for authentication information.
 =========================================================
 */
 
-
 const AuthContext = createContext(null);
-
 
 /*
 =========================================================
@@ -100,7 +89,6 @@ authentication state.
 
 =========================================================
 */
-
 
 export function AuthProvider({ children }) {
   /*
@@ -124,15 +112,11 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   const [user, setUser] = useState(null);
-
 
   const [token, setToken] = useState(null);
 
-
   const [loading, setLoading] = useState(true);
-
 
   /*
   =====================================================
@@ -176,30 +160,21 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   useEffect(() => {
     try {
       const storedToken = localStorage.getItem("token");
 
-
       const storedUser = localStorage.getItem("user");
-
 
       if (storedToken && storedUser) {
         setToken(storedToken);
 
-
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
-      console.error(
-        "Failed to restore authentication:",
-        error
-      );
-
+      console.error("Failed to restore authentication:", error);
 
       localStorage.removeItem("token");
-
 
       localStorage.removeItem("user");
     } finally {
@@ -208,11 +183,9 @@ export function AuthProvider({ children }) {
       has completed.
       */
 
-
       setLoading(false);
     }
   }, []);
-
 
   /*
   =====================================================
@@ -236,23 +209,15 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   function login(authToken, userData) {
     setToken(authToken);
 
-
     setUser(userData);
-
 
     localStorage.setItem("token", authToken);
 
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(userData)
-    );
+    localStorage.setItem("user", JSON.stringify(userData));
   }
-
 
   /*
   =====================================================
@@ -269,20 +234,15 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   function logout() {
     setToken(null);
 
-
     setUser(null);
-
 
     localStorage.removeItem("token");
 
-
     localStorage.removeItem("user");
   }
-
 
   /*
   =====================================================
@@ -298,9 +258,7 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   const isAuthenticated = Boolean(token);
-
 
   /*
   =====================================================
@@ -314,7 +272,6 @@ export function AuthProvider({ children }) {
   =====================================================
   */
 
-
   const value = useMemo(
     () => ({
       user,
@@ -324,22 +281,11 @@ export function AuthProvider({ children }) {
       login,
       logout,
     }),
-    [
-      user,
-      token,
-      loading,
-      isAuthenticated,
-    ]
+    [user, token, loading, isAuthenticated],
   );
 
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
 
 /*
 =========================================================
@@ -364,21 +310,15 @@ useAuth()
 =========================================================
 */
 
-
 export function useAuth() {
   const context = useContext(AuthContext);
 
-
   if (!context) {
-    throw new Error(
-      "useAuth must be used within AuthProvider"
-    );
+    throw new Error("useAuth must be used within AuthProvider");
   }
-
 
   return context;
 }
-
 
 /*
 =========================================================
