@@ -2,15 +2,11 @@
 
 
 import { useEffect, useState } from "react";
-
-
 import { useDispatch, useSelector } from "react-redux";
-
 
 import MovieCard from "../components/MovieCard";
 import Pagination from "../components/Pagination";
 import LoadingSpinner from "../components/LoadingSpinner";
-
 
 import { fetchMovies } from "../redux/movies/moviesSlice";
 
