@@ -1,6 +1,5 @@
 // src/routes/ProtectedRoute.jsx
 
-
 /*
 =========================================================
 SPRINT 2 – PROTECTED ROUTES
@@ -37,41 +36,37 @@ Admin Users Only
 =========================================================
 */
 
-
-import { Navigate } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 
 import { useAuth } from "../hooks/useAuth";
 
-
 export default function ProtectedRoute({
   children,
-
 
   roles = [],
 }) {
   const {
     isAuthenticated,
 
-
     loading,
-
 
     user,
   } = useAuth();
 
-
+  const location = useLocation();
   /*
   ------------------------------------------------
   SESSION RESTORATION IN PROGRESS
   ------------------------------------------------
   */
 
-
   if (loading) {
     return <p>Restoring session...</p>;
   }
-
 
   /*
   ------------------------------------------------
@@ -79,44 +74,36 @@ export default function ProtectedRoute({
   ------------------------------------------------
   */
 
-
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location }}
+      />
+    );
   }
 
 
   /*
   ------------------------------------------------
   ROLE CHECK
-
-
   Example:
-
-
   roles = ["admin"]
-
-
   user.role === "user"
-
-
   ↓
-
-
   Redirect
 
 
   ------------------------------------------------
   */
 
-
   if (roles.length > 0 && !roles.includes(user?.role)) {
     return <Navigate to="/" replace />;
   }
 
-
   return children;
 }
-
 
 /*
 =========================================================
@@ -159,14 +146,8 @@ KEY TAKEAWAYS
 
 1. Authentication and authorization
    are different concepts.
-
-
 2. ProtectedRoute centralizes checks.
-
-
 3. Session restoration prevents
    incorrect redirects.
-
-
 =========================================================
 */
